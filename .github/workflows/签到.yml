@@ -1,0 +1,92 @@
+name: 签到
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: 30 04,23 * * ?
+  watch:
+    types: started
+    
+jobs:
+  run-it:
+    runs-on: ubuntu-latest
+    name: 签到
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+        - name: Checkout codes
+          uses: actions/checkout@v2
+          
+        - name: 运行时间
+          run: |
+           time=$(curl "http://quan.suning.com/getSysTime.do")
+           echo -e ${time}
+           
+    #自己写的循环语句变量传递有点问题，就用这个修改yml文件增加或者减少"Run 号码xx"的方法运行算了。
+    #这里举个列子如下，假如是第@个号码，就可以在后面添加如下，然后自己去添加对应的secret变量 HAOMA@、MM@就行了
+        #- name: Run 号码@
+          #env:
+           #haoma: ${{ secrets.HAOMA@ }}
+           #mm: ${{ secrets.MM@ }}
+           #appid: ${{ secrets.APPID }}
+          #run: |
+           #bash CnUnicom.sh ${haoma} ${mm} ${appid}
+    #例子到此为止
+ 
+        - name: Run 号码1
+          env:
+           haoma: ${{ secrets.HAOMA }}
+           mm: ${{ secrets.MM }}
+           appid: ${{ secrets.APPID }}
+          run: |
+           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           
+        - name: Run 号码2
+          env:
+           haoma: ${{ secrets.HAOMA2 }}
+           mm: ${{ secrets.MM }}
+           appid: ${{ secrets.APPID }}
+          run: |
+           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+
+        - name: Run 号码3
+          env:
+           haoma: ${{ secrets.HAOMA3 }}
+           mm: ${{ secrets.MM }}
+           appid: ${{ secrets.APPID }}
+          run: |
+           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           
+        - name: Run 号码4
+          env:
+           haoma: ${{ secrets.HAOMA4 }}
+           mm: ${{ secrets.MM }}
+           appid: ${{ secrets.APPID }}
+          run: |
+           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           
+        - name: Run 号码5
+          env:
+           haoma: ${{ secrets.HAOMA5 }}
+           mm: ${{ secrets.MM }}
+           appid: ${{ secrets.APPID }}
+          run: |
+           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           
+        - name: Run 号码6
+          env:
+           haoma: ${{ secrets.HAOMA6 }}
+           mm: ${{ secrets.MM }}
+           appid: ${{ secrets.APPID }}
+          run: |
+           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           
+        - name: Run 号码7
+          env:
+           haoma: ${{ secrets.HAOMA7 }}
+           mm: ${{ secrets.MM2 }}
+           appid: ${{ secrets.APPID }}
+          run: |
+           bash CnUnicom.sh ${haoma} ${mm} ${appid}
