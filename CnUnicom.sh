@@ -147,12 +147,10 @@ function membercenter() {
     echo
     curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity -e "$Referer" "https://act.10010.com/SigninApp/signin/todaySign"
     echo
+    curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity -e "$Referer" "https://act.10010.com/SigninApp/signin/daySign"
+    echo
     curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity -e "$Referer" "https://act.10010.com/SigninApp/signin/addIntegralDA"
     ##签到视频翻倍赠送积分
-    Referer="https://img.client.10010.com/activitys/member/index.html"
-    data="yw_code=&desmobile=$username&version=android@$unicom_version"
-    curl -sLA "$UA" -b $workdir/cookie -c $workdir/cookie.SigninActivity -e "$Referer" "https://act.10010.com/SigninApp/signin/querySigninActivity.htm?$data" >/dev/null
-    Referer="https://act.10010.com/SigninApp/signin/querySigninActivity.htm?$data"
     echo
     curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity -e "$Referer" "https://act.10010.com/SigninApp/signin/bannerAdPlayingLogo"
     ##三次金币抽奖， 每日最多可花费金币执行十三次
@@ -178,10 +176,14 @@ function membercenter() {
     
     # 游戏奖励积分签到
     echo; curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity --data "methodType=signin" https://m.client.10010.com/producGame_signin
+    echo; curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity --data "methodType=queryIntegral&deviceType=Android&clientVersion=$unicom_version&taskCenterId=&videoIntegral=&isVideo=
+" https://m.client.10010.com/producGameTaskCenter
 
     # 游戏宝箱
     curl -X POST -sA "$UA"  -b $workdir/cookie.SigninActivity -c $workdir/cookie.xybx --data "thirdUrl=https%3A%2F%2Fimg.client.10010.com%2Fshouyeyouxi%2Findex.html%23%2Fyouxibaoxiang" https://m.client.10010.com/mobileService/customer/getShareRedisInfo.htm >/dev/null
     echo; curl -X POST -sA "$UA" -b $workdir/cookie.xybx --data "methodType=reward&deviceType=Android&clientVersion=$unicom_version&isVideo=N" https://m.client.10010.com/game_box
+    ##游戏宝箱翻倍
+    echo; curl -X POST -sA "$UA" -b $workdir/cookie.xybx --data "methodType=reward&deviceType=Android&clientVersion=$unicom_version&isVideo=Y" https://m.client.10010.com/game_box
     #宝箱任务100M
     echo; curl -sA "$UA" -b $workdir/cookie.xybx --data "methodType=taskGetReward&deviceType=Android&clientVersion=$unicom_version&taskCenterId=98" https://m.client.10010.com/producGameTaskCenter
     
