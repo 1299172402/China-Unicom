@@ -15,7 +15,7 @@
 
 运行开始时间也可以自己修改`.github/workflows/签到.yml`文件中`- cron: 05 23 * * *`，你想运行的北京时间减8就行了。05代表5分，23代表23时，就是0时区23：05的意思。
 
-PS：我自己是7个号码签到，所以.github/workflows/签到.yml文件里面有“Run 号码1-7” 7个项目，你们可以根据自己需求自由复制或者删除。
+**PS**：我自己是7个号码签到，所以.github/workflows/签到.yml文件里面有“Run 号码1-7” 7个项目，你们可以根据自己需求自由复制或者删除，否则Actions会显示失败。
 
 ## 各版本使用教程  
 > [**CnUnicom.sh**](https://github.com/mixool/HiCnUnicom/blob/master/tutorial/CnUnicom_sh_readme.md)  

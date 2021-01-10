@@ -32,7 +32,7 @@ jobs:
            #mm: ${{ secrets.MM@ }}
            #appid: ${{ secrets.APPID }}
           #run: |
-           #bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           #bash CnUnicom.sh
     #例子到此为止
  
         - name: Run 号码1
@@ -41,7 +41,7 @@ jobs:
            mm: ${{ secrets.MM }}
            appid: ${{ secrets.APPID }}
           run: |
-           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           bash CnUnicom.sh
            
         - name: Run 号码2
           env:
@@ -49,15 +49,15 @@ jobs:
            mm: ${{ secrets.MM }}
            appid: ${{ secrets.APPID }}
           run: |
-           bash CnUnicom.sh ${haoma} ${mm} ${appid}
-
+           bash CnUnicom.sh
+           
         - name: Run 号码3
           env:
            haoma: ${{ secrets.HAOMA3 }}
            mm: ${{ secrets.MM }}
            appid: ${{ secrets.APPID }}
           run: |
-           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           bash CnUnicom.sh
            
         - name: Run 号码4
           env:
@@ -65,7 +65,7 @@ jobs:
            mm: ${{ secrets.MM }}
            appid: ${{ secrets.APPID }}
           run: |
-           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           bash CnUnicom.sh
            
         - name: Run 号码5
           env:
@@ -73,7 +73,7 @@ jobs:
            mm: ${{ secrets.MM }}
            appid: ${{ secrets.APPID }}
           run: |
-           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           bash CnUnicom.sh
            
         - name: Run 号码6
           env:
@@ -81,7 +81,7 @@ jobs:
            mm: ${{ secrets.MM }}
            appid: ${{ secrets.APPID }}
           run: |
-           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           bash CnUnicom.sh
            
         - name: Run 号码7
           env:
@@ -89,4 +89,4 @@ jobs:
            mm: ${{ secrets.MM2 }}
            appid: ${{ secrets.APPID }}
           run: |
-           bash CnUnicom.sh ${haoma} ${mm} ${appid}
+           bash CnUnicom.sh
