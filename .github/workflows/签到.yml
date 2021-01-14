@@ -3,8 +3,6 @@ name: 签到
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
   schedule:
     - cron: 30 04,23 * * ?
   watch:
@@ -21,8 +19,8 @@ jobs:
           
         - name: 运行时间
           run: |
-           time=$(curl "http://quan.suning.com/getSysTime.do")
-           echo -e ${time}
+           time=$(curl -s "http://quan.suning.com/getSysTime.do")
+           echo -e "当前时间：\n${time}"
            
     #自己写的循环语句变量传递有点问题，就用这个修改yml文件增加或者减少"Run 号码xx"的方法运行算了。
     #这里举个列子如下，假如是第@个号码，就可以在后面添加如下，然后自己去添加对应的secret变量 HAOMA@、MM@就行了
