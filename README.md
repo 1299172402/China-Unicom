@@ -6,7 +6,7 @@
 
 ### 2.添加secret
 设置PARAMETER的值为脚本支持的参数,如 githubaction membercenter 13800008888@112233 18388880000@123456
-进入仓库后点击 `Settings`，右侧栏点击 `Secrets`，点击 `New secret`。添加 `PARAMETER` 的值，为脚本支持的参数如： `githubaction membercenter 13800008888@112233 18388880000@123456 appId@247b001385de5cc6ce11731ba1b15835313d489d604e58280e455a6c91e5058651acfb0f0b77029c2372659c319e02645b54c0acc367e692ab24a546b83c302d`  
+进入仓库后点击 `Settings`，右侧栏点击 `Secrets`，点击 `New secret`。添加 `PARAMETER` 的值，为脚本支持的参数如： `githubaction membercenter 13800008888@112233 18388880000@123456 appId@247b001385de5cc6ce11731ba1b15835313d489d604e58280e455a6c91e5058651acfb0f0b77029c2372659c319e02645b54c0acc367e692ab24a546b83c302d deviceId@440003300018231`  
   
 `247b001385de5cc6ce11731ba1b15835313d489d604e58280e455a6c91e5058651acfb0f0b77029c2372659c319e02645b54c0acc367e692ab24a546b83c302d`为联通app抓包的appd值  <不保证这个appid能用，所以最好自己抓包，如果运行登录失败大概率就是appid不对或者失效>  
 以下获取appid方法由群友提供：不会抓包的就去手机文件管理器，目录路径为 `Unicom/appid` ，打开复制就行了。
