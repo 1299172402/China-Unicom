@@ -5,13 +5,11 @@
 ### 1.Fork 本仓库
 
 ### 2.添加secret
-进入仓库后点击 `Settings`，右侧栏点击 `Secrets`，点击 `New secret`。分别添加 `HAOMA`、`MM` 和 `APPID` 的值，对应为你的 `要签到的手机号码`、`手机号码的服务密码` 和 `联通app抓包的appd值`。
-其中 `APPID` 为联通app抓包的appid值，最好自己抓包，不会抓包就默认填 `247b001385de5cc6ce11731ba1b15835313d489d604e58280e455a6c91e5058651acfb0f0b77029c2372659c319e02645b54c0acc367e692ab24a546b83c302d`  <不保证这个appid能用，所以最好自己抓包，如果运行登录失败大概率就是appid不对或者失效>  
+设置PARAMETER的值为脚本支持的参数,如 githubaction membercenter 13800008888@112233 18388880000@123456
+进入仓库后点击 `Settings`，右侧栏点击 `Secrets`，点击 `New secret`。添加 `PARAMETER` 的值，为脚本支持的参数如： `githubaction membercenter 13800008888@112233 18388880000@123456 appId@247b001385de5cc6ce11731ba1b15835313d489d604e58280e455a6c91e5058651acfb0f0b77029c2372659c319e02645b54c0acc367e692ab24a546b83c302d`  
+  
+`247b001385de5cc6ce11731ba1b15835313d489d604e58280e455a6c91e5058651acfb0f0b77029c2372659c319e02645b54c0acc367e692ab24a546b83c302d`为联通app抓包的appd值  <不保证这个appid能用，所以最好自己抓包，如果运行登录失败大概率就是appid不对或者失效>  
 以下获取appid方法由群友提供：不会抓包的就去手机文件管理器，目录路径为 `Unicom/appid` ，打开复制就行了。
-
-有多个手机号码则可以自己修改仓库文件 `.github/workflows/签到.yml` 中的每个号码的
-`${{ secrets.HAOMA }}`为`${{ secrets.HAOMA2 }}`、`${{ secrets.HAOMA3 }}`等等，密码同理为`${{ secrets.MM }}`、`${{ secrets.MM2 }}`
-同时也需要添加Secrets变量`HAOMA2`、`HAOMA3`、`MM2`等等。
 
 运行开始时间也可以自己修改`.github/workflows/签到.yml`文件中`- cron: 05 23 * * *`，你想运行的北京时间减8就行了。05代表5分，23代表23时，就是0时区23：05的意思。
 
