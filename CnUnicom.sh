@@ -17,7 +17,8 @@ deviceId=$(shuf -i 123456789012345-987654321012345 -n 1)
 echo ${all_parameter[*]} | grep -qE "deviceId@[0-9]+" && deviceId=$(echo ${all_parameter[*]} | grep -oE "deviceId@[0-9]+" | cut -f2 -d@)
 
 #####
-## 流量激活功能需要传入参数,中间d表示每天,w表示每周一,m代表每月初,格式： liulactive@d@ff80808166c5ee6701676ce21fd14716
+## 流量激活功能需要传入参数,中间d表示每天,w表示每周一,m代表每月第二天,格式： liulactive@d@ff80808166c5ee6701676ce21fd14716
+## 如仅需要部分号码激活流量包时使用参数格式：liulactive@d@ff80808166c5ee6701676ce21fd14716@13012341234-18812341234
 ## 1GB日包：          ff80808166c5ee6701676ce21fd14716
 ## 2GB日包:           21010621565413402
 ## 5GB日包:           21010621461012371
@@ -28,10 +29,6 @@ echo ${all_parameter[*]} | grep -qE "deviceId@[0-9]+" && deviceId=$(echo ${all_p
 ## 500MB全国流量月包: ff80808165afd2960165cdbf4a950c1c
 ## 1GB全国流量月包：  ff80808165afd2960165cdbc92470bef
 #####
-
-# 使用Github Action运行时需要传入参数来修改工作路径: githubaction
-workdirbase="/var/log/CnUnicom"
-echo ${all_parameter[*]} | grep -qE "githubaction" && workdirbase="/home/runner/work/HiCnUnicom/CnUnicom"
 
 # 联通APP版本
 unicom_version=8.0100
@@ -92,20 +89,20 @@ EOF
 
     # cookie登录
     curl -X POST -sA "$UA" -b $workdir/cookie -c $workdir/cookie "https://m.client.10010.com/mobileService/customer/query/getMyUnicomDateTotle.htm?yw_code=&mobile=$username&version=android%40$unicom_version" | grep -oE "infoDetail" >/dev/null && status=0 || status=1
-    [[ $status == 0 ]] && echo && echo $(date) cookies登录${username:0:3}****${username:7}成功
+    [[ $status == 0 ]] && echo && echo $(date) cookies登录${username:0:2}****${username:9}成功
     
     # 账号密码登录
     if [[ $status == 1 ]]; then
         curl -X POST -sA "$UA" -c $workdir/cookie "https://m.client.10010.com/mobileService/logout.htm?&desmobile=$username&version=android%40$unicom_version" >/dev/null
         curl -sA "$UA" -b $workdir/cookie -c $workdir/cookie -d @$workdir/signdata "https://m.client.10010.com/mobileService/login.htm" >/dev/null
         token=$(cat $workdir/cookie | grep -E "a_token" | awk  '{print $7}')
-        [[ "$token" = "" ]] && echo && echo $(date) ${username:0:3}****${username:7} Login Failed. && rm -rf $workdir && return 1
-        echo && echo $(date) 密码登录${username:0:3}****${username:7}成功
+        [[ "$token" = "" ]] && echo && echo $(date) ${username:0:2}****${username:9} Login Failed. && rm -rf $workdir && return 1
+        echo && echo $(date) 密码登录${username:0:2}****${username:9}成功
     fi
 }
 
 function membercenter() {
-    echo ${all_parameter[*]} | grep -qE "membercenter" || return
+    echo ${all_parameter[*]} | grep -qE "membercenter" || return 0
     echo; echo starting membercenter...
     
     # 获取文章和评论生成数组数据
@@ -157,6 +154,11 @@ function membercenter() {
     curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity -e "$Referer" "https://act.10010.com/SigninApp/signin/todaySign"
     echo
     curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity -e "$Referer" "https://act.10010.com/SigninApp/signin/addIntegralDA"
+
+    curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity -e "$Referer" "https://act.10010.com/SigninApp/signin/getContinuous"
+    curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity -e "$Referer" "https://act.10010.com/SigninApp/signin/getIntegral"
+    curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity -e "$Referer" "https://act.10010.com/SigninApp/signin/getGoldTotal"
+
     curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity -e "$Referer" "https://act.10010.com/SigninApp/signin/bannerAdPlayingLogo"
     
     # 三次金币抽奖， 每日最多可花费金币执行十三次
@@ -191,16 +193,6 @@ function membercenter() {
     echo; curl -sA "$UA" -b $workdir/cookie.xybx --data "methodType=taskGetReward&deviceType=Android&clientVersion=$unicom_version&taskCenterId=98" https://m.client.10010.com/producGameTaskCenter
     echo; curl -X POST -sA "$UA" -b $workdir/cookie.xybx --data "methodType=reward&deviceType=Android&clientVersion=$unicom_version&isVideo=Y" https://m.client.10010.com/game_box
     
-    # 沃之树浇水
-    curl -X POST -sA "$UA" -b $workdir/cookie.SigninActivity -c $workdir/cookie.wotree --data "thirdUrl=https%3A%2F%2Fimg.client.10010.com%2Fmactivity%2FwoTree%2Findex.html%23%2F" https://m.client.10010.com/mobileService/customer/getShareRedisInfo.htm >/dev/null
-    Referer="https://img.client.10010.com/mactivity/woTree/index.html"
-    curl -X POST -sA "$UA" -b $workdir/cookie.wotree -c $workdir/cookie.wotree -e "$Referer" https://m.client.10010.com/mactivity/mailb/isNewLetter.htm >/dev/null
-    curl -X POST -sA "$UA" -b $workdir/cookie.wotree -c $workdir/cookie.wotree -e "$Referer" https://m.client.10010.com/mactivity/task/bord.htm >/dev/null
-    curl -X POST -sA "$UA" -b $workdir/cookie.wotree -c $workdir/cookie.wotree -e "$Referer" https://m.client.10010.com/mactivity/arbordayJson/index.htm >/dev/null
-    curl -X POST -sA "$UA" -b $workdir/cookie.wotree -c $workdir/cookie.wotree -e "$Referer" https://m.client.10010.com/mactivity/arbordayJson/getChanceByIndex.htm?index=0 >/dev/null
-    curl -X POST -sA "$UA" -b $workdir/cookie.wotree -c $workdir/cookie.wotree -e "$Referer" https://m.client.10010.com/mactivity/stealingEnergy/engerSign.htm >/dev/null
-    echo; curl -X POST -sA "$UA" -b $workdir/cookie.wotree -c $workdir/cookie.wotree -e "$Referer" https://m.client.10010.com/mactivity/arbordayJson/arbor/3/0/3/grow.htm | grep -oE "addedValue\":[0-9]"
-    
     # 获得流量
     for ((i = 1; i <= 3; i++)); do
         curl -X POST -sA "$UA" -b $workdir/cookie --data "stepflag=22" https://act.10010.com/SigninApp/mySignin/addFlow >/dev/null; sleep 5
@@ -213,23 +205,29 @@ function membercenter() {
 
 function tgbotinfo() {
     # TG_BOT通知消息: 未设置相应传入参数时不执行,传入参数格式 token@*** chat_id@*** | 参考: https://github.com/LXK9301/jd_scripts/blob/master/backUp/TG_PUSH.md
-    echo ${all_parameter[*]} | grep -qE "token@[a-zA-Z0-9:_-]+" && token="$(echo ${all_parameter[*]} | grep -oE "token@[a-zA-Z0-9:_-]+" | cut -f2 -d@)" || return
-    echo ${all_parameter[*]} | grep -qE "chat_id@[0-9-]+" && chat_id="$(echo ${all_parameter[*]} | grep -oE "chat_id@[0-9-]+" | cut -f2 -d@)" || return
+    echo ${all_parameter[*]} | grep -qE "token@[a-zA-Z0-9:_-]+" && token="$(echo ${all_parameter[*]} | grep -oE "token@[a-zA-Z0-9:_-]+" | cut -f2 -d@)" || return 0
+    echo ${all_parameter[*]} | grep -qE "chat_id@[0-9-]+" && chat_id="$(echo ${all_parameter[*]} | grep -oE "chat_id@[0-9-]+" | cut -f2 -d@)" || return 0
     text="$(echo ${userlogin_err[*]} ${#userlogin_err[*]} Failed. ${userlogin_ook[*]} ${#userlogin_ook[*]} Accomplished.)"
     curl -sX POST "https://api.telegram.org/bot$token/sendMessage" -d "chat_id=$chat_id&text=$text" >/dev/null
 }
 
 function liulactive() {
     # 流量激活功能
-    echo ${all_parameter[*]} | grep -qE "liulactive@[mwd]@[0-9a-z]+" || return
+    echo ${all_parameter[*]} | grep -qE "liulactive@[mwd]@[0-9a-z]+" || return 0
     timeparId=$(echo ${all_parameter[*]} | grep -oE "liulactive@[mwd]@[0-9a-z]+" | cut -f2 -d@)
     productId=$(echo ${all_parameter[*]} | grep -oE "liulactive@[mwd]@[0-9a-z]+" | cut -f3 -d@)
+    choosenos=$(echo ${all_parameter[*]} | grep -oE "liulactive@[mwd]@[0-9a-z]+@.*" | cut -f4 -d@)
     # 依照参数m|w|d来判断是否执行
     unset liulactive_run
-    [[ ${timeparId} == "m" ]] && [[ "$(date +%d)" == "01" ]] && liulactive_run=true
+    [[ ${timeparId} == "m" ]] && [[ "$(date +%d)" == "02" ]] && liulactive_run=true
     [[ ${timeparId} == "w" ]] && [[ "$(date +%u)" == "1" ]]  && liulactive_run=true
     [[ ${timeparId} == "d" ]] && liulactive_run=true
-    [[ "$liulactive_run" == "true" ]] || return
+    [[ "$liulactive_run" == "true" ]] || return 0
+    # 依照参数choosenos来判断是否是指定号码执行,激活功能的参数全格式： liulactive@d@ff80808166c5ee6701676ce21fd14716@13012341234-13112341234
+    unset liulactive_only
+    [[ $choosenos != "" ]] && echo $choosenos | grep -qE "${username}" && liulactive_only=true
+    [[ $choosenos == "" ]] && liulactive_only=true
+    [[ "$liulactive_only" == "true" ]] || return 0
     # 激活请求
     echo; echo $(date) liulactive..
     curl -sA "$UA" -b $workdir/cookie -c $workdir/cookie_liulactive "https://m.client.10010.com/MyAccount/trafficController/myAccount.htm?flag=1&cUrl=https://m.client.10010.com/myPrizeForActivity/querywinninglist.htm?pageSign=1" >$workdir/liulactive.log
@@ -245,13 +243,13 @@ function main() {
     for ((u = 0; u < ${#all_username_password[*]}; u++)); do
         sleep $(shuf -i 1-10 -n 1)
         username=${all_username_password[u]%@*} && password=${all_username_password[u]#*@}
-        workdir="${workdirbase}_${username}" && [[ ! -d "$workdir" ]] && mkdir $workdir
-        userlogin && userlogin_ook[u]=$(echo ${username:0:3}****${username:7}) || { userlogin_err[u]=$(echo ${username:0:3}****${username:7}); continue; }
+        workdir="$(pwd)/CnUnicom_${username}" && [[ ! -d "$workdir" ]] && mkdir $workdir
+        userlogin && userlogin_ook[u]=$(echo ${username:0:2}****${username:9}) || { userlogin_err[u]=$(echo ${username:0:2}****${username:9}); continue; }
         membercenter
         liulactive
         #rm -rf $workdir
     done
-    echo; echo $(date) ${userlogin_err[*]} ${#userlogin_err[*]} Failed. ${userlogin_ook[*]} ${#userlogin_ook[*]} Accomplished.
+    echo; echo $(date) ${userlogin_err[*]} ${#userlogin_err[*]} 签到失败. ${userlogin_ook[*]} ${#userlogin_ook[*]} 签到完成.
     # TG通知
     tgbotinfo
 }
