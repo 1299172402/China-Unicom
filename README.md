@@ -12,6 +12,7 @@
 | 参数 |  说明  |
 | -------- | ----- |
 | `membercenter` |   加入这个表示会运行除激活流量包的所有签到活动，无则不会签到|
+| `niujieactive` |   加入这个表示会运行牛节活动，无则不参加|
 | `12345678901@112233` |   为 11位手机号码@6位服务密码，有多个手机号则依次添加即可|
 | `appId@xxxx` |   其中xxxx为appld值，具体可抓包或者安卓使用下面的方法获得|
 | `liulactive@d@ff80808166c5ee6701676ce21fd14716` |   为流量包激活激活所需参数，中间d表示每天,w表示每周一,m代表每月第二天，ff80~4716为1g流量日包id值。比如左边参数代表为所有手机号每天激活一个1g流量日包|
@@ -36,9 +37,9 @@
 以下获取appid方法由群友提供：安卓不会抓包的就去手机文件管理器，目录路径为 `Unicom/appid` ，打开复制就行了。  
 
 **填入参数举例**：  
-`membercenter 号码1@密码1 号码2@密码2 号码3@密码3 appId@xxxx` 代表号码1、2和3进行正常签到  
-`membercenter 号码1@密码1 号码2@密码2 号码3@密码3 appId@xxxx liulactive@d@xxxx` 代表号码1、2和3进行正常签到且每天为所有号码激活id值为xxxx的流量包  
-`membercenter 号码1@密码1 号码2@密码2 号码3@密码3 appId@xxxx liulactive@w@xxxx@号码1-号码2` 代表号码1、2和3进行正常签到且每周一仅为号码1和2激活id值为xxxx的流量包  
+`membercenter niujieactive 号码1@密码1 号码2@密码2 号码3@密码3 appId@xxxx` 代表号码1、2和3进行正常签到  
+`membercenter niujieactive 号码1@密码1 号码2@密码2 号码3@密码3 appId@xxxx liulactive@d@xxxx` 代表号码1、2和3进行正常签到且每天为所有号码激活id值为xxxx的流量包  
+`membercenter niujieactive 号码1@密码1 号码2@密码2 号码3@密码3 appId@xxxx liulactive@w@xxxx@号码1-号码2` 代表号码1、2和3进行正常签到且每周一仅为号码1和2激活id值为xxxx的流量包  
 `号码1@密码1 号码2@密码2 号码3@密码3 appId@xxxx liulactive@m@xxxx` 代表每月2号为所有号码激活id值为xxxx的流量包，不进行签到活动  
 
 运行开始时间也可以自己修改`.github/workflows/签到.yml`文件中`- cron: 05 23 * * *`，你想运行的北京时间减8就行了。05代表5分，23代表23时，就是0时区23：05的意思。
