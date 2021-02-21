@@ -1,8 +1,8 @@
 name: 签到
 
 on:
-  push:
-    branches: [ master ]
+  #push:
+    #branches: [ master ]
   workflow_dispatch:
   schedule:
     - cron: 30 23 * * ?
@@ -23,7 +23,7 @@ jobs:
            time=$(curl -s "http://quan.suning.com/getSysTime.do")
            echo -e "当前时间：$(echo "${time}" | awk -F '":"|","' '{print $2}')"
            
-    #设置PARAMETER的值为脚本支持的参数,如 membercenter 13800008888@112233 18388880000@123456
+    #设置PARAMETER的值为脚本支持的参数,如 githubaction membercenter 13800008888@112233 18388880000@123456
  
         - name: 运行号码签到
           env:
