@@ -6,7 +6,7 @@
 
 ### 2.添加secret
 设置 `PARAMETER` 的值为脚本支持的参数，间隔符使用空格即可。  
-进入仓库后点击 `Settings`，右侧栏点击 `Secrets`，点击 `New secret`。添加 `PARAMETER` 的值，为脚本支持的参数如： `githubaction membercenter jifeninfo 12345678901@112233 01234567891@123456 appId@247b001385de5cc6ce11731ba1b15835313d489d604e58280e455a6c91e5058651acfb0f0b77029c2372659c319e02645b54c0acc367e692ab24a546b83c302d`  
+进入仓库后点击 `Settings`，右侧栏点击 `Secrets`，点击 `New secret`。添加 `PARAMETER` 的值，为脚本支持的参数如： `githubaction membercenter jifeninfo otherinfo 12345678901@112233 01234567891@123456 appId@247b001385de5cc6ce11731ba1b15835313d489d604e58280e455a6c91e5058651acfb0f0b77029c2372659c319e02645b54c0acc367e692ab24a546b83c302d`  
 
 #### Secrets参数 `PARAMETER` 具体说明:
 | 参数 |  说明  |
@@ -14,12 +14,13 @@
 | `membercenter` |   加入这个表示会运行除激活流量包的所有签到活动，无则不会签到|
 | `githubaction` |   使用github action运行则必须添加以设置目录|
 | `jifeninfo` |   加入这个表示会运行号码积分信息查询|
+| `otherinfo` |   加入这个表示会运行号码及其它信息如套餐及话费查询|
 | ~~hfgoactive~~ |   加入这个表示会运行话费购活动，但境外ip貌似不能联通，所以不添加|
 | `12345678901@112233` |   为 11位手机号码@6位服务密码，有多个手机号则依次添加即可|
 | `appId@xxxx` |   其中xxxx为appld值，具体可抓包或者安卓使用下面的方法获得|
 | `liulactive@d@ff80808166c5ee6701676ce21fd14716` |   为流量包激活激活所需参数，中间d表示每天,w表示每周一,m代表每月第二天，ff80~4716为1g流量日包id值。比如左边参数代表为所有手机号每天激活一个1g流量日包|
 | `liulactive@d@ff80808166c5ee6701676ce21fd14716@13012341234-18812341234` |   代表仅为手机号13012341234和18812341234每天激活一个1g流量日包，其余手机号不执行流量包激活|
-| `token@*** chat_id@***` |   为telegram bot通知所需参数，无则不进行积分通知|
+| `token@*** chat_id@***` |   为telegram bot通知所需参数，无则不进行信息通知|
 
 ##### 各流量包id具体值：
 | 流量包名 |  id值  |
