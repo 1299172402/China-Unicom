@@ -216,6 +216,14 @@ function tgbotinfo() {
     # TG_BOT通知消息: 未设置相应传入参数时不执行,传入参数格式 token@*** chat_id@*** | 参考: https://github.com/LXK9301/jd_scripts/blob/master/backUp/TG_PUSH.md
     echo ${all_parameter[*]} | grep -qE "token@[a-zA-Z0-9:_-]+" && token="$(echo ${all_parameter[*]} | grep -oE "token@[a-zA-Z0-9:_-]+" | cut -f2 -d@)" || return 0
     echo ${all_parameter[*]} | grep -qE "chat_id@[0-9-]+" && chat_id="$(echo ${all_parameter[*]} | grep -oE "chat_id@[0-9-]+" | cut -f2 -d@)" || return 0
+    # 简约通知信息，需要传入参数 tgsimple
+    unset tgsimple
+    echo ${all_parameter[*]} | grep -qE "tgsimple" && tgsimple=true
+    if [[ $tgsimple == "true" ]]; then
+        text="$(echo -e ${username:0:2}******${username:8})'\n' 可用余额:$curntbalancecust 实时话费:$realfeecust 积分:$total-$availablescore-$todayscore)"
+        curl -sX POST "https://api.telegram.org/bot$token/sendMessage" -d "chat_id=$chat_id&text=$text" >/dev/null; sleep 3
+        return 0
+    fi
     # 登录状态
     text="$(echo ${userlogin_err[u]} ${#userlogin_err[*]} Failed. ${userlogin_ook[u]} ${#userlogin_ook[*]} Accomplished.)"
     curl -sX POST "https://api.telegram.org/bot$token/sendMessage" -d "chat_id=$chat_id&text=$text" >/dev/null; sleep 3
