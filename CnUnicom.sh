@@ -193,7 +193,7 @@ function membercenter() {
     
     # 每日领100定向积分
     echo && echo
-    curl -m 10 -X POST -sA "$UA" -b $workdir/cookie --data "from=$(shuf -i 12345678901-98765432101 -n 1)" https://m.client.10010.com/welfare-mall-front/mobile/integral/gettheintegral/v1
+    curl -m 10 -X POST -sA "$UA" -b $workdir/cookie --data "from=98880000020" https://m.client.10010.com/welfare-mall-front/mobile/integral/gettheintegral/v1
     
     # 游戏签到积分 每日1积分
     echo && echo
